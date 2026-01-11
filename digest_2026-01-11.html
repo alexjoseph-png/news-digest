@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Coverage Digest - January 11, 2026</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 24px;
+            background: #fff;
+            color: #1a1a1a;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .header {
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0 0 4px 0;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        .header .meta { color: #666; font-size: 13px; }
+
+        /* Table of Contents */
+        .toc {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        .toc-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            background: #fff;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.15s ease;
+        }
+        .toc-item:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .toc-color {
+            width: 4px;
+            height: 24px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .toc-info { flex: 1; min-width: 0; }
+        .toc-product {
+            font-weight: 500;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .toc-owner {
+            font-size: 11px;
+            color: #64748b;
+        }
+        .toc-count {
+            background: #e2e8f0;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Category sections */
+        .category { margin: 28px 0 16px 0; }
+        .category-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Product sections */
+        .product {
+            margin-bottom: 20px;
+            scroll-margin-top: 20px;
+        }
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid currentColor;
+        }
+        .product-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .owner {
+            font-size: 12px;
+            color: #0066cc;
+            background: #e0f2fe;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Articles */
+        .article {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .article:last-child { border-bottom: none; }
+        .article-title {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        .article-title a {
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+        .article-title a:hover { color: #2563eb; }
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+        .article-meta a {
+            color: #64748b;
+            text-decoration: none;
+        }
+        .article-meta a:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        .favicon {
+            width: 14px;
+            height: 14px;
+            border-radius: 2px;
+            vertical-align: middle;
+        }
+        .author-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        .author-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .article-summary {
+            color: #374151;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+        .quote {
+            font-size: 12px;
+            color: #6b7280;
+            padding-left: 10px;
+            border-left: 2px solid #e5e7eb;
+            margin: 6px 0;
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 11px;
+            color: #94a3b8;
+            display: flex;
+            justify-content: space-between;
+        }
+        .no-coverage {
+            padding: 40px;
+            text-align: center;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .copy-hint {
+            background: #fefce8;
+            border: 1px solid #fde047;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 16px;
+            color: #854d0e;
+        }
+
+        /* Product Feedback Box */
+        .feedback-box {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
+            border: 1px solid #fcd34d;
+            border-radius: 6px;
+        }
+        .feedback-header {
+            font-size: 11px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .feedback-item {
+            padding: 8px 0;
+            border-top: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        .feedback-item:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+        .feedback-type {
+            font-size: 12px;
+            font-weight: 600;
+            color: #78350f;
+            margin-bottom: 4px;
+        }
+        .competitor-badge {
+            background: #7c3aed;
+            color: white;
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+            margin-left: 6px;
+        }
+        .feedback-summary {
+            font-size: 13px;
+            color: #451a03;
+            margin-bottom: 4px;
+        }
+        .feedback-quote {
+            font-size: 11px;
+            color: #78350f;
+            font-style: italic;
+            padding-left: 8px;
+            border-left: 2px solid #fbbf24;
+        }
+
+        /* Sentiment indicators */
+        .sentiment {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .sentiment-positive {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .sentiment-neutral {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+        .sentiment-negative {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .sentiment-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .sentiment-positive .sentiment-dot { background: #22c55e; }
+        .sentiment-neutral .sentiment-dot { background: #9ca3af; }
+        .sentiment-negative .sentiment-dot { background: #ef4444; }
+
+        /* Sentiment legend */
+        .sentiment-legend {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* PDF button */
+        .pdf-btn {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            margin-left: 12px;
+        }
+        .pdf-btn:hover {
+            background: #333;
+        }
+
+        /* Print styles */
+        @media print {
+            .copy-hint, .pdf-btn { display: none; }
+            body { padding: 0; }
+        }
+    </style>
+    <script>
+        function printPDF() {
+            window.print();
+        }
+    </script>
+</head>
+<body>
+    <div class="copy-hint">
+        <strong>Tip:</strong> Cmd+A to select all, Cmd+C to copy, paste into Google Docs
+        <button class="pdf-btn" onclick="printPDF()">Save as PDF</button>
+    </div>
+
+    <div class="header">
+        <h1>Daily Coverage Digest</h1>
+        <div class="meta">January 11, 2026</div>
+    </div>
+
+    <div class="toc">
+        <div class="toc-title">Today's Coverage · 2 articles</div>
+        <div class="sentiment-legend">
+            <span class="legend-item"><span class="sentiment-dot" style="background:#22c55e;width:8px;height:8px;border-radius:50%;display:inline-block;"></span> 2 positive</span>
+            <span class="legend-item"><span class="sentiment-dot" style="background:#9ca3af;width:8px;height:8px;border-radius:50%;display:inline-block;"></span> 0 neutral</span>
+            <span class="legend-item"><span class="sentiment-dot" style="background:#ef4444;width:8px;height:8px;border-radius:50%;display:inline-block;"></span> 0 negative</span>
+        </div>
+        <div class="toc-grid" style="margin-top: 12px;">
+
+            <a href="#notebooklm" class="toc-item">
+                <div class="toc-color" style="background: #2563eb;"></div>
+                <div class="toc-info">
+                    <div class="toc-product">NotebookLM</div>
+                    <div class="toc-owner">@arianagaspar <span style="color:#22c55e;">●●</span></div>
+                </div>
+                <div class="toc-count">2</div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="category">
+        <div class="category-title">Google Labs</div>
+
+        <div class="product" id="notebooklm">
+            <div class="product-header" style="color: #2563eb;">
+                <span class="product-name">NotebookLM</span>
+                <span class="owner">@arianagaspar</span>
+            </div>
+
+            <div class="article">
+                <div class="article-title"><a href="https://www.makeuseof.com/how-notebooklm-transformed-my-obsidian-vault/">I fed my Obsidian vault into NotebookLM — and it changed everything</a> <span class="sentiment sentiment-positive"><span class="sentiment-dot"></span>Positive</span></div>
+                <div class="article-meta"><img src="https://www.google.com/s2/favicons?domain=www.makeuseof.com&sz=32" class="favicon" alt="" onerror="this.style.display='none'"><a href="https://www.makeuseof.com">MakeUseOf</a> · <span class="author-info"><img src="https://ui-avatars.com/api/?name=Tashreef%20Shareef&size=28&background=e2e8f0&color=475569&bold=true&rounded=true" class="author-avatar" alt="" onerror="this.style.display='none'">Tashreef Shareef</span></div>
+                <div class="article-summary">A tech writer explains how NotebookLM successfully identified hidden patterns in years of writing pitches and research stored in an Obsidian vault, transforming a disorganized 'digital graveyard' into actionable insights.</div>
+
+                <div class="quote">"I uploaded a chunk of my vault into NotebookLM to see if Google's AI tool could make my notes useful again."</div>
+
+                <div class="feedback-box">
+                    <div class="feedback-header">🎯 Product Feedback</div>
+
+                    <div class="feedback-item">
+                        <div class="feedback-type">💭 Use Case Insight</div>
+                        <div class="feedback-summary">The user successfully used NotebookLM to identify thematic reasons for professional rejection/success across hundreds of notes, a task too labor-intensive to do manually.</div>
+
+                        <div class="feedback-quote">"I started with a simple question: what's the common thread between my rejected pitches? ... NotebookLM pulled out two patterns I hadn't consciously noticed."</div>
+
+                    </div>
+
+                    <div class="feedback-item">
+                        <div class="feedback-type">⚔️ Competitive Gap</div>
+                        <div class="feedback-summary">The 50-source limit is a friction point for power users with large research databases, requiring them to use third-party tools to merge files before uploading.</div>
+
+                        <div class="feedback-quote">"If you have dozens of notes to upload, there's a catch. NotebookLM accepts up to 50 sources per notebook on the free tier. For larger vaults, you can use a PDF merger tool..."</div>
+
+                    </div>
+
+                    <div class="feedback-item">
+                        <div class="feedback-type">🏆 Competitive Win</div>
+                        <div class="feedback-summary">Native support for Markdown (.md) files is a significant advantage for developers and power users who use tools like Obsidian.</div>
+
+                        <div class="feedback-quote">"Since Obsidian stores everything as Markdown files, I could upload them directly—NotebookLM supports .md along with PDFs, Google Docs, and text files."</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="article">
+                <div class="article-title"><a href="https://pypi.org/project/notebooklm-py/0.1.3/">notebooklm-py 0.1.3</a> <span class="sentiment sentiment-positive"><span class="sentiment-dot"></span>Positive</span></div>
+                <div class="article-meta"><img src="https://www.google.com/s2/favicons?domain=pypi.org&sz=32" class="favicon" alt="" onerror="this.style.display='none'"><a href="https://pypi.org">Pypi.org</a></div>
+                <div class="article-summary">A developer has released an unofficial Python library and CLI for NotebookLM, enabling users to programmatically automate research, generate Audio Overviews, and integrate the tool into other AI agents like Claude Code.</div>
+
+                <div class="quote">"Unofficial Python client for Google NotebookLM API"</div>
+
+                <div class="feedback-box">
+                    <div class="feedback-header">🎯 Product Feedback</div>
+
+                    <div class="feedback-item">
+                        <div class="feedback-type">💡 Feature Request</div>
+                        <div class="feedback-summary">There is a strong developer desire for an official API to support automation, bulk-importing sources, and programmatic generation of artifacts like podcasts and summaries.</div>
+
+                        <div class="feedback-quote">"The missing API for Google NotebookLM."</div>
+
+                    </div>
+
+                    <div class="feedback-item">
+                        <div class="feedback-type">💭 Use Case Insight <span class="competitor-badge">vs Claude</span></div>
+                        <div class="feedback-summary">Users are seeking to integrate NotebookLM's specialized research and audio generation capabilities directly into other AI development environments like Anthropic's Claude Code.</div>
+
+                        <div class="feedback-quote">"Integrate NotebookLM into Claude Code, or other LLM agents. Ships with Claude Code skills for natural language automation"</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <span>Auto-generated coverage digest</span>
+        <span>2026-01-11 11:32</span>
+    </div>
+</body>
+</html>
